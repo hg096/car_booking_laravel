@@ -142,12 +142,12 @@ watch(
                 <Link
                     v-if="isCarShow"
                     href="/reservation"
-                    class="p-2 bg-green-300 rounded-md"
+                    class="min-text p-2 bg-green-300 rounded-md"
                     method="post"
                     :data="form"
                     as="button"
                     >예약하기</Link>
-                <p v-else class="p-2 bg-gray-300 w-fit rounded-md">
+                <p v-else class="min-text p-2 bg-gray-300 w-fit rounded-md">
                     예약하기
                 </p>
             </div>

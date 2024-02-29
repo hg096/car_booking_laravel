@@ -112,7 +112,7 @@ const carBrands = ref(reverseObject(carTypesKo));
                     <p >시작 날짜</p>
                     <p >{{ form.dateStart.replace('T', ' ' ) }}</p>
                 </div>
-                <p class="text-center flex justify-center items-center w-[20%] pt-[24px]">
+                <p class="text-center flex-center-all w-[20%] pt-[24px]">
                     ~
                 </p>
                 <div>
@@ -124,7 +124,7 @@ const carBrands = ref(reverseObject(carTypesKo));
             <!-- 예약완료 -->
             <div class="flex items-center justify-end mt-4">
                 <PrimaryButton
-                    class="ms-4"
+                    class="min-text ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >

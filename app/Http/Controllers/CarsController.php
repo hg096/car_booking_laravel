@@ -10,20 +10,42 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class CarsController extends Controller
 {
 
 
-    public function list(): Response
+    public function list(Request $request): Response
     {
 
-        $cars = Cars::paginate(3, ['*'], 'carspage');
+        // DB::enableQueryLog();
+
+
+        $searchName = $request->query('carNameSearch');
+
+        // $cars = Cars::paginate(3, ['*'], 'carspage')
+        // ->when(!empty($searchName), function ($query, $searchName) {
+        //     // $query->where('name', '=', $searchName);
+        //     $query->where('name', 'like', '%' . $searchName . '%');
+        // });
+
+        $cars = Cars::when(!empty($searchName), function ($query) use ($searchName) {
+            $query->where('name', 'like', '%' . $searchName . '%');
+        })
+            ->paginate(3, ['*'], 'carspage');
+
+        // $queries = DB::getQueryLog();
+        // print_r($queries);
+        // print_r($searchName);
+
+
 
         $bookingDates = [];
         $userId = !empty(Auth::id()) ? Auth::id() : null;
 
+        // 내가 예약한 리스트
         if (!empty($userId)) {
             $bookingDates = BookingDate::join('cars', 'booking_date.car_id', '=', 'cars.id')
                 ->where('user_id', '=', $userId)
